@@ -14,6 +14,9 @@ public class PhotoActivity extends AppCompatActivity {
 
     ImageView img;
 
+    //SubsamplingScaleImageView img;
+    //View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

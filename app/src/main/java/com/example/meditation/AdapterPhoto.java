@@ -41,18 +41,21 @@ public class AdapterPhoto extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View v = View.inflate(mContext,R.layout.item_photo,null);
-
-        ImageView Image = v.findViewById(R.id.image);
-        TextView dateCreate = v.findViewById(R.id.Create);
-        MaskPhoto maskImage  = maskList.get(position);
-        if(maskImage.getImageProfile().exists()){
-
-            Bitmap myBitmap = BitmapFactory.decodeFile(maskImage.getImageProfile().getAbsolutePath());
-            Image.setImageBitmap(myBitmap);
+        MaskPhoto maskImage = maskList.get(position);
+        View v = null;
+        if(maskImage.getImageProfile()==null){
+            v = View.inflate(mContext, R.layout.item_photo,null);
         }
-        dateCreate.setText(maskImage.getData());
-
+        else{
+            v = View.inflate(mContext,R.layout.item_photo,null);
+            ImageView Image = v.findViewById(R.id.image);
+            TextView dateCreate = v.findViewById(R.id.Create);
+            if(maskImage.getImageProfile().exists()){
+                Bitmap myBitmap = BitmapFactory.decodeFile(maskImage.getImageProfile().getAbsolutePath());
+                Image.setImageBitmap(myBitmap);
+            }
+            dateCreate.setText(maskImage.getData());
+        }
         return v;
     }
 }

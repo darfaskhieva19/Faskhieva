@@ -37,8 +37,8 @@ import java.util.TimeZone;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    ImageView img;
-    TextView txtName;
+    ImageView img; //иконка
+    TextView txtName; //имя пользователя
     OutputStream Stream;
     public static MaskPhoto maskImage;
     private AdapterPhoto pAdapter;
@@ -50,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         img = findViewById(R.id.Avatar);
         txtName = findViewById(R.id.NameProfile);
-
         txtName.setText(MainActivity.Name);
         new AdapterQuete.DownloadImageTask((ImageView) img).execute(MainActivity.image);
         GridView gvImage = findViewById(R.id.lvImg);
@@ -62,7 +61,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 maskImage = list.get(i);
-                startActivity(new Intent(ProfileActivity.this, PhotoActivity.class));
+                if(maskImage.getImageProfile()==null){
+                    addImage();
+                }
+                else{
+                    maskImage = list.get(i);
+                    startActivity(new Intent(ProfileActivity.this, PhotoActivity.class));
+                }
             }
         });
     }
@@ -98,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(new Intent(this, LoginActivity.class));
     }
 
-    public void addImage(View view)
+    public void addImage()
     {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
